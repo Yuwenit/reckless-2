@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,7 +90,7 @@ public class PicController {
 		//立字串然後使用spring getOriginalFilename():Return the original filename in the client's filesystem.
 		//getName():Return the name of the parameter in the multipart form.
 		//set到bean裡面
-		String picProfileName = picFile.getName();
+		String picProfileName = picFile.getOriginalFilename();
 		pic.setProfileName(picProfileName);
 		System.out.println("picProfileName:"+picProfileName);
 
@@ -99,10 +99,9 @@ public class PicController {
 		pic.setWhatSize(picFile.getSize());
 		
 		appService.save(pic);
-
 		System.out.println("PicController /savedetection"+pic);
 		
-		//有redirect時候 console會一閃而過被洗掉重製
+		//有redirect console會一閃而過被洗掉重製
 		return "redirect:/pic/list";
 	}
 
@@ -111,12 +110,13 @@ public class PicController {
 	(@RequestParam("picId")int theId) {
 		appService.deletebyId(theId);
 		System.out.println("PicController /deletepicture :"+theId);
+		//有redirect console會一閃而過被洗掉重製
 		return "redirect:/pic/list";
 	}
- 
+
 	@RequestMapping("/image")
 	public void showImage(
-			@Param("id") int id,
+			@RequestParam("id") int id,
 			HttpServletResponse response,
 			Optional<Pic> result
 			) throws ServletException, IOException {
@@ -124,13 +124,50 @@ public class PicController {
 		// java8 才有的 class, 一樣是用容器 (container) 
 		//來封裝一個 value-base 的 class, 需要透過 .get() 的方式取得, 或是透過 .isPresent() 是否 non-null。
 		//在 JPA select 資料的時候超好用的。
-		
 		result = appService.findPicById(id);
 		
+		//setContentType():Return the content type of the file.
 		response.setContentType("image/jpeg, image/jpg, image/png, image/gif, image/pdf");
+		//The getOutputStream() returns an output stream for writing bytes to this socket.
 		response.getOutputStream().write(result.get().getContent());
 		response.getOutputStream().close();
 		System.out.println("PicController /image:" +" id:"+id+"\n result"+result);
 	}
-
+	
+	@RequestMapping("/download")
+	public void downloadFile(
+			@RequestParam("id") int id,
+			Model model,
+			HttpServletResponse response)
+			throws IOException{
+		
+		Optional <Pic> result = appService.findPicById(id);
+		
+		if(result!=null) {
+			Pic pic = result.get();
+			
+			//一對一(Discrete)可分為五大類，每一類底下也有許多子項目。
+			//text : 代表內容包含文字且具有可讀性。//image : 代表影像相關。
+			//audio : 代表音訊相關。//vedio : 代表影像相關。
+			//文字常用text/plain;二進制類型常用application/octet-stream
+			//表單類常用multipart/form-data
+			response.setContentType("application/octet-stream");
+			
+			//Content-Disposition是 MIME 協議的擴展MIME 用戶代理如何顯示附加的文件。
+			//所以Content-Disposition可以控制使用者儲存檔案時的檔案名稱。
+			String headerKey =  "Content-Disposition";
+			String headerValue = "attachment; picProfileName = " +pic.getProfileName();
+			response.setHeader(headerKey,headerValue);
+			
+			ServletOutputStream outputStream = response.getOutputStream();
+			outputStream.write(pic.getContent());
+			outputStream.close();
+			
+			System.out.println("Controller /download");
+			System.out.println("headerKey:"+headerKey);
+			System.out.println("headerValue:"+headerValue);
+			System.out.println("outputStream"+outputStream);
+		}
+		
+	}
 }

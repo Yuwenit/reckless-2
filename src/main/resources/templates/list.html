@@ -49,6 +49,10 @@
 			<td>[[${tempPic.profileName}]]</td>
 			<td>([[${tempPic.whatSize}]]) B</td>
 			
+			<td><a th:href="@{'/pic/download?id=' +${tempPic.id}}"
+				 class = "btn btn-dark">Download
+				</a></td>
+			
 			<td><a th:href = "@{/pic/showFormForUpdate(picId=${tempPic.id})}"
 			   class="tn btn-info btn-sm">Update</a></td>
 <!-- 			JS message -->
