@@ -22,13 +22,14 @@ public class AppServiceImpl implements AppService {
 	
 	@Override
 	public List<Pic> getAllPicList() {
+		System.out.println("AppServiceImpl List findAll()");
 		return picRepository.findAll();
 	}
 
 	@Override
 	public void save(Pic thePicture) {
 		picRepository.save(thePicture);
-		System.out.println("AppServiceImpl"+thePicture);
+		System.out.println("AppServiceImpl save"+thePicture);
 	}
 
 	@Override
@@ -43,6 +44,16 @@ public class AppServiceImpl implements AppService {
 		System.out.println("AppleServiceImpl findbyId:"+theId);
 		return thePicture;
 	}
+
+	@Override
+	public void deletebyId(int theId) {
+		picRepository.deleteById(theId);
+		System.out.println("AppleServiceImpl deletebyId:"+theId);
+	}
 	
+	public Optional<Pic> findPicById(int id){
+		System.out.println("AppServiceImpl Optional<Pic> findPicById"+id);
+		return picRepository.findById(id);
+	}
 	
 }

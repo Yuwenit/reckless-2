@@ -1,5 +1,7 @@
 package reckless02.app.model;
 
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,14 +28,15 @@ public class Pic {
 	private int id;
 	@Column(name="name")
 	private String name;
+	@Column(name="content")
+	private byte [] content;
+	@Column(name="profileName")
+	private String profileName;
+	@Column(name="whatSize")
+	private long whatSize;
 	
 	//by hibernate
 	public Pic() {}
-
-	public Pic(int id, String name) {
-		this.id = id;
-		this.name = name;
-	}
 
 	public int getId() {
 		return id;
@@ -51,8 +54,35 @@ public class Pic {
 		this.name = name;
 	}
 
+	public byte[] getContent() {
+		return content;
+	}
+
+	public void setContent(byte[] content) {
+		this.content = content;
+	}
+
+	public String getProfileName() {
+		return profileName;
+	}
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
+
+	public long getWhatSize() {
+		return whatSize;
+	}
+
+	public void setWhatSize(long whatSize) {
+		this.whatSize = whatSize;
+	}
+
 	@Override
 	public String toString() {
-		return "Pic [id=" + id + ", name=" + name + "]";
+		return "Pic [id=" + id + ", name=" + name + 
+				", content=" + Arrays.toString(content) + 
+				", profileName="+ profileName + ", whatSize=" + whatSize + "]";
 	}
+
 }
