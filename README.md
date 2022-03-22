@@ -1,6 +1,6 @@
 # 小破爛一號
 
-小小圖片上傳 :rofl: 更新中.....當有進步的時候:sweat_smile:
+圖片上傳 :rofl: 更新中.....當有進步的時候:sweat_smile:
 
 ## •專案參考資料
 
@@ -15,11 +15,10 @@
 
 - File >> Spring Starter Project  
 - Spring Boot Version 2.6.3  
-- Java Version 8 / 1.8 (這個要問土豆班長我也不知道)  
+- Java Version 8 / 1.8
 - Maven project 與 jar package  
 - 套件選擇 Thymeleaf / spring data JPA / Spring webP / devtool / mysql  
-- Pom.xml 版本與Dependencies全文如下  
-JDBC為什麼不用也要問一下 
+- Pom.xml 版本與Dependencies全如下 
 
 ```text
 	<parent>
@@ -93,5 +92,3 @@ JDBC為什麼不用也要問一下
 
 - Table >> Table Name (reckless01)右鍵 >> Alter Table  
 - Column Name (content) >> MEDIUMBLOB
-
-應該就可以跑了這樣
