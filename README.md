@@ -92,3 +92,7 @@
 
 - Table >> Table Name (reckless01)右鍵 >> Alter Table  
 - Column Name (content) >> MEDIUMBLOB
+
+### •套版使用 Bootstrap 5 ，導入bundle
+
+- 帶入自行可以使用版本的Bootstrap CDN & JQ &JS
