@@ -6,57 +6,67 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<!-- 線上版 Bootstrap 5 & bundle popper-->
+	<!-- integrity-Subresource Integrity(SRI)允許瀏覽器檢查載入的 script 是否經過第三方竄改，提升安全性。 -->
+	<!-- crossrigin-anonymous：此元素的 CORS 請求將不設置任何標誌。 -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
+	rel="stylesheet" 
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" 
+	crossorigin="anonymous"> -->
+	<!-- <script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+			crossorigin="anonymous"></script>  -->
+
+    <!-- 本地版 Bootstrap 5 ，導入bundle包含jq和popper  不另外導入其他--> 
+	<!-- 不需要載入 JQuery 函式庫，減少載入的資源和容量 -->
+	 <link th:href="@{/css/bootstrap513.min.css}" rel="stylesheet">
+	 	<script src="@{/js/bootstrap513.bundle.min.js}"></script>
+
+	<!-- Bootstrap 3.3.7--搭配jq &js  -->
+	<!-- <link th:href="@{/css/bootstrap337.min.css}" rel="stylesheet" >
+		<script src="@{/js/jquery1124.min.js}"></script>
+		<script src="@{/js/bootstrap337.min.js}"></script> -->
+	
 	<title>Picture Detection</title>
 </head>
 
 <body>
 
-		<div class = "container">
-		<h3>Picture Detection</h3>
-		<hr>
-		
+	<nav class="navbar navbar-expand-lg bg-dark text-light p-1 relative-top">
+		<a href="#" class="navbar-brand font-weight-bold">
+		Picture Detection</a>
+	</nav>
+
+	<div class="container m-5">
 		<form action="#" 
 		th:action="@{/pic/savedetection}"
 		th:object="${pictures}" 
 		method="POST"
 		enctype="multipart/form-data">
-		
-<!-- 		<form action="#"  -->
-<!-- 		th:action="@{/pic/savedetection}" -->
-<!-- 		method="POST" -->
-<!-- 		enctype="multipart/form-data"> -->
-		
-<!--    add hidden -->
+			
+	<!--    add hidden -->
 		<input type="hidden"  th:field="*{id}"/>
-<!-- 			   id = "id" -->
-<!-- 			   name="id"		 -->
 		
-<!-- 	generated automatically -->
-			<input type="text" 
-					th:field="*{id}"
-				   class="form-control mb-4 col-4"
-				   placeholder="ID"/>
-<!-- 				   id = "id" -->
-<!-- 				   name="id" -->		
+	<!-- 	generated automatically -->
+		<input type="text" 
+				   th:field="*{id}"
+				   class="form-control mb-4 col-1"
+				   placeholder="ID"/>	
 						 
-			<input type="text" 
+		<input type="text" 
 				   th:field="*{name}"
-				   class="form-control mb-4 col-4"
+				   class="form-control mb-4 col-1"
 				   placeholder="Name"/>
 				  
-<!-- 				   id = "name" -->
-<!-- 			   	   name="name" -->
-			<input type="file"
-				   class="form-control mb-4 col-4"
+		<input type="file"
+				   class="form-control mb-4 col-1"
 				   th:field="*{content}"
 				   placeholder="Select a Picture"/>
 				  
-<!-- 						   ID = "CONTENT" -->
-<!-- 				   NAME="CONTENT" -->
-			 <button type="submit" class="btn btn-info col-2">Save Detection</button>
+		<button type="submit" class="btn btn-info">Save Detection</button>
 		</form>
+	</div>	
 
 </body>
 </html>
