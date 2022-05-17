@@ -6,8 +6,8 @@
 
 "https://codebun.com/spring-boot-upload-and-download-file-example-using-thymeleaf/"
 
-- 關鍵字: spring boot/thymeleaf/ mysql/ blob  
-- 不使用lombok 套件，手動建立DAO Bean  
+- 關鍵字: spring boot/thymeleaf/ mysql/ blob 
+- 檔案上傳方法說明:不使用lombok 套件，手動建立DAO Bean，blob方式儲存檔案
   
 ## •環境&建置步驟
 
